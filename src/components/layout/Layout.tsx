@@ -45,7 +45,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                         <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center border border-primary/30">
                             <Swords className="h-4 w-4 text-primary" />
                         </div>
-                        <span className="font-bold text-lg tracking-tight italic">Grand Archive Tracker</span>
+                        <span className="font-bold text-lg tracking-tight">Grand Archive Tracker</span>
                     </div>
                     <div className="flex items-center space-x-3">
                         {userDisplayId && (

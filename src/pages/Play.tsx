@@ -64,7 +64,7 @@ export default function Play() {
     return (
         <div className="space-y-6 pb-20 animate-fade-in">
             <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-md py-4 -mx-4 px-4 border-b border-primary/10">
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-blue-400 bg-clip-text text-transparent italic">
+                <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-blue-400 bg-clip-text text-transparent">
                     Play Session
                 </h1>
             </header>
