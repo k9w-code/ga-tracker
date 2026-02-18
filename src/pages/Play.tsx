@@ -104,8 +104,8 @@ export default function Play() {
                 </Card>
 
                 <Card className="glass-card overflow-hidden">
-                    <CardHeader className="bg-secondary/5 py-3 text-center border-b border-secondary/10">
-                        <CardTitle className="text-sm font-bold text-secondary-foreground">対戦相手</CardTitle>
+                    <CardHeader className="bg-red-500/10 py-3 text-center border-b border-red-500/20">
+                        <CardTitle className="text-sm font-bold text-red-500">対戦相手</CardTitle>
                     </CardHeader>
                     <CardContent className="flex flex-col items-center p-6 space-y-4">
                         <span className="text-6xl font-black text-foreground">{p2Life}</span>

@@ -37,12 +37,12 @@ export default function Home() {
                 </h1>
                 <div className="flex gap-2">
                     <Link to="/play">
-                        <Button variant="outline" size="sm" className="rounded-full border-primary/30">
-                            <Swords className="h-4 w-4 mr-1 text-primary" /> 对戦
+                        <Button variant="outline" size="sm" className="border-primary/30">
+                            <Swords className="h-4 w-4 mr-1 text-primary" /> 対戦
                         </Button>
                     </Link>
                     <Link to="/matches">
-                        <Button size="sm" className="rounded-full shadow-md">
+                        <Button size="sm" className="shadow-md">
                             <Plus className="h-4 w-4 mr-1" /> 記録
                         </Button>
                     </Link>
