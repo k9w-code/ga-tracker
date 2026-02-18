@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 export function Layout({ children }: { children: React.ReactNode }) {
     const location = useLocation();
     const [userDisplayId, setUserDisplayId] = useState<string | null>(null);
+    const [isDark, setIsDark] = useState(false);
 
     const getDisplayId = (email?: string | null) => {
         if (!email) return null;
@@ -14,6 +15,18 @@ export function Layout({ children }: { children: React.ReactNode }) {
     };
 
     useEffect(() => {
+        // テーマ初期化
+        const savedTheme = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+        if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
+            setIsDark(true);
+            document.documentElement.classList.add("dark");
+        } else {
+            setIsDark(false);
+            document.documentElement.classList.remove("dark");
+        }
+
         supabase.auth.getUser().then(({ data: { user } }) => {
             setUserDisplayId(getDisplayId(user?.email));
         });
@@ -24,6 +37,18 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
         return () => subscription.unsubscribe();
     }, []);
+
+    const toggleTheme = () => {
+        const nextDark = !isDark;
+        setIsDark(nextDark);
+        if (nextDark) {
+            document.documentElement.classList.add("dark");
+            localStorage.setItem("theme", "dark");
+        } else {
+            document.documentElement.classList.remove("dark");
+            localStorage.setItem("theme", "light");
+        }
+    };
 
     const handleLogout = async () => {
         await supabase.auth.signOut();
