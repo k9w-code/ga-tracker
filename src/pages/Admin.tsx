@@ -3,7 +3,7 @@ import { supabase } from "../lib/supabase";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
-import { Search, Trash2, Shield, ShieldAlert, User, LogOut } from "lucide-react";
+import { Search, Trash2, Shield, ShieldAlert, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 

@@ -10,6 +10,7 @@ import Tournaments from "./pages/Tournaments";
 import Login from "./pages/Login";
 import Play from "./pages/Play";
 import Admin from "./pages/Admin";
+import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 
 import { Component, type ErrorInfo, type ReactNode } from "react";
 
@@ -103,7 +104,7 @@ function App() {
               <Route path="/stats" element={<Stats />} />
               <Route path="/play" element={<Play />} />
               <Route path="/tournaments" element={<Tournaments />} />
-              <Route path="/admin" element={<Admin />} />
+              <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Layout>
