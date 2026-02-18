@@ -91,7 +91,7 @@ export default function Decks() {
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-xs text-muted-foreground">Decklist URL (Shout At Your Decks)</label>
+                            <label className="text-xs text-muted-foreground">Decklist URL (任意)</label>
                             <Input
                                 placeholder="https://shoutatyourdecks.com/decks/..."
                                 value={decklistUrl}
