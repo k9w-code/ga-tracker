@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Outfit', 'Inter', sans-serif;
+
+  --color-background: hsl(0 0% 98.4%);
+  --color-foreground: hsl(210 20% 12%);
+
+  --color-primary: hsl(45 100% 48%); /* Golden Era Gold */
+  --color-primary-foreground: hsl(210 20% 12%);
+
+  --color-secondary: hsl(200 100% 96%); /* Sky Blue Mist */
+  --color-secondary-foreground: hsl(200 60% 30%);
+
+  --color-accent: hsl(190 80% 90%);
+  --color-accent-foreground: hsl(190 60% 25%);
+
+  --color-card: hsl(0 0% 100%);
+  --color-card-foreground: hsl(210 20% 12%);
+
+  --color-muted: hsl(210 20% 96%);
+  --color-muted-foreground: hsl(210 10% 45%);
+
+  --color-border: hsl(210 20% 90%);
+
+  --radius: 0.75rem;
+}
+
+/* Custom Utilities for Glassmorphism */
+@layer components {
+  .glass-panel {
+    @apply bg-white/70 backdrop-blur-md border border-white/40 shadow-sm;
+  }
+
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-sm border border-white/30 shadow-md;
+  }
+}
+
+/* Base styles */
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
