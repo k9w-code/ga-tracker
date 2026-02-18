@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { Plus, Minus, RotateCcw, Play as PlayIcon, Pause } from "lucide-react";
@@ -10,6 +11,7 @@ interface TimerState {
 }
 
 export default function Play() {
+    const navigate = useNavigate();
     // ライフカウンター状態
     const [p1Life, setP1Life] = useState(0);
     const [p2Life, setP2Life] = useState(0);
@@ -63,10 +65,14 @@ export default function Play() {
 
     return (
         <div className="space-y-6 pb-20 animate-fade-in">
-            <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-md py-4 -mx-4 px-4 border-b border-primary/10">
+            <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-md py-4 -mx-4 px-4 border-b border-primary/10 flex justify-between items-center">
                 <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-blue-400 bg-clip-text text-transparent">
                     Play Session
                 </h1>
+                <Button size="sm" onClick={() => navigate("/matches", { state: { isAdding: true } })}>
+                    <Plus className="h-4 w-4 mr-1" />
+                    記録
+                </Button>
             </header>
 
             {/* ライフカウンター */}

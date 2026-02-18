@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { useMatches } from "../hooks/useMatches";
 import { useDecks } from "../hooks/useDecks";
 import { Button } from "../components/ui/button";
@@ -12,8 +13,17 @@ import type { Match, GameResult } from "../types";
 export default function Matches() {
     const { matches, addMatch, deleteMatch, updateMatch, loading } = useMatches();
     const { decks, loading: decksLoading } = useDecks();
+    const location = useLocation();
     const [isAdding, setIsAdding] = useState(false);
     const [editingMatchId, setEditingMatchId] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (location.state?.isAdding) {
+            setIsAdding(true);
+            // 状態をクリアして、リロード時などに再度開かないようにする
+            window.history.replaceState({}, document.title);
+        }
+    }, [location]);
 
     // Form State
     const [selectedDeckId, setSelectedDeckId] = useState("");
