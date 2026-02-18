@@ -33,7 +33,7 @@ export default function Home() {
         <div className="space-y-6 pb-20 animate-fade-in">
             <header className="flex justify-between items-center bg-background/80 backdrop-blur-md py-4 -mx-4 px-4 sticky top-0 z-10 border-b border-white/5">
                 <div>
-                    <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent italic">
+                    <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent">
                         Grand Archive Tracker
                     </h1>
                 </div>
@@ -126,7 +126,7 @@ export default function Home() {
                                                         <span>{deck?.name || "不明なデッキ"}</span>
                                                     </div>
                                                     {match.notes && (
-                                                        <div className="text-[9px] italic text-white/50 truncate max-w-[150px]">
+                                                        <div className="text-[9px] text-white/50 truncate max-w-[150px]">
                                                             {match.notes}
                                                         </div>
                                                     )}

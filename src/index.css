@@ -6,14 +6,17 @@
   --color-background: hsl(0 0% 98.4%);
   --color-foreground: hsl(210 20% 12%);
 
-  --color-primary: hsl(45 100% 48%); /* Golden Era Gold */
-  --color-primary-foreground: hsl(210 20% 12%);
+  --color-primary: hsl(220 90% 55%);
+  /* Grand Archive Blue */
+  --color-primary-foreground: hsl(0 0% 100%);
 
-  --color-secondary: hsl(200 100% 96%); /* Sky Blue Mist */
-  --color-secondary-foreground: hsl(200 60% 30%);
+  --color-secondary: hsl(210 50% 96%);
+  /* Silver White */
+  --color-secondary-foreground: hsl(220 90% 30%);
 
-  --color-accent: hsl(190 80% 90%);
-  --color-accent-foreground: hsl(190 60% 25%);
+  --color-accent: hsl(190 90% 50%);
+  /* Energy Cyan */
+  --color-accent-foreground: hsl(220 90% 20%);
 
   --color-card: hsl(0 0% 100%);
   --color-card-foreground: hsl(210 20% 12%);

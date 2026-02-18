@@ -129,7 +129,7 @@ export default function Matches() {
                     {isAdding ? "キャンセル" : (
                         <>
                             <Plus className="h-4 w-4 mr-1" />
-                            対戦を記録
+                            記録
                         </>
                     )}
                 </Button>
@@ -166,7 +166,7 @@ export default function Matches() {
 
                         <div className="space-y-3">
                             <div className="flex justify-between items-center">
-                                <label className="text-xs text-muted-foreground font-bold uppercase tracking-wider">Game Records (BO3)</label>
+                                <label className="text-xs text-muted-foreground font-bold uppercase tracking-wider">Game Records</label>
                                 {games.length < 3 && (
                                     <Button variant="ghost" size="sm" onClick={addGame} className="h-6 text-[10px] px-2 border border-white/10">
                                         + ゲームを追加
@@ -326,7 +326,7 @@ export default function Matches() {
                                                 {deck?.name || "不明なデッキ"}
                                             </div>
                                             {match.notes && (
-                                                <div className="text-xs mt-1 px-2 py-1 bg-white/5 border border-white/5 rounded italic text-white/70 break-all">
+                                                <div className="text-xs mt-1 px-2 py-1 bg-white/5 border border-white/5 rounded text-white/70 break-all">
                                                     {match.notes}
                                                 </div>
                                             )}
