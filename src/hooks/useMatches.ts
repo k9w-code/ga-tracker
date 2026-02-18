@@ -18,9 +18,9 @@ export function useMatches() {
                 id: m.id,
                 deckId: m.deck_id,
                 tournamentId: m.tournament_id,
-                opponentHero: m.opponent_hero,
+                opponentDeck: m.opponent_deck || m.opponent_hero || "",
                 result: m.result,
-                first: !!m.first,
+                games: m.games || (m.first !== undefined ? [{ first: !!m.first, result: m.result === 'draw' ? 'win' : m.result }] : []),
                 date: m.date || new Date().toISOString(),
                 notes: m.notes || ""
             }));
@@ -48,9 +48,9 @@ export function useMatches() {
                 user_id: (await supabase.auth.getUser()).data.user?.id,
                 deck_id: match.deckId,
                 tournament_id: match.tournamentId,
-                opponent_hero: match.opponentHero,
+                opponent_deck: match.opponentDeck,
                 result: match.result,
-                first: match.first,
+                games: match.games,
                 date: match.date || new Date().toISOString(),
                 notes: match.notes
             }])
@@ -62,9 +62,9 @@ export function useMatches() {
                 id: data.id,
                 deckId: data.deck_id,
                 tournamentId: data.tournament_id,
-                opponentHero: data.opponent_hero,
+                opponentDeck: data.opponent_deck,
                 result: data.result,
-                first: data.first,
+                games: data.games,
                 date: data.date,
                 notes: data.notes
             };
@@ -87,9 +87,9 @@ export function useMatches() {
             .update({
                 deck_id: updates.deckId,
                 tournament_id: updates.tournamentId,
-                opponent_hero: updates.opponentHero,
+                opponent_deck: updates.opponentDeck,
                 result: updates.result,
-                first: updates.first,
+                games: updates.games,
                 date: updates.date,
                 notes: updates.notes
             })

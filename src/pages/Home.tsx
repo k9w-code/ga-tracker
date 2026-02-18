@@ -117,7 +117,7 @@ export default function Home() {
                                                     )}>
                                                         {match.result === 'win' ? '勝利' : match.result === 'loss' ? '敗北' : '引分'}
                                                     </span>
-                                                    <span className="text-sm font-semibold">vs {match.opponentHero}</span>
+                                                    <span className="text-sm font-semibold">vs {match.opponentDeck}</span>
                                                 </div>
                                                 <div className="text-[10px] text-muted-foreground mt-1 flex flex-col gap-1">
                                                     <div className="flex items-center gap-1">
@@ -132,8 +132,15 @@ export default function Home() {
                                                     )}
                                                 </div>
                                             </div>
-                                            {match.first && <span className="text-[10px] bg-white/10 px-1.5 py-0.5 rounded text-white/70">先攻</span>}
-                                            {!match.first && <span className="text-[10px] bg-white/10 px-1.5 py-0.5 rounded text-white/70 border border-white/10">後攻</span>}
+                                            <div className="flex flex-col items-end gap-1">
+                                                <div className="flex gap-0.5">
+                                                    {match.games?.map((g, i) => (
+                                                        <span key={i} className={cn("text-[8px] px-1 rounded-sm", g.result === 'win' ? "text-green-400 bg-green-400/10" : "text-red-400 bg-red-400/10")}>
+                                                            {g.result === 'win' ? 'W' : 'L'}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            </div>
                                         </CardContent>
                                     </Card>
                                 </div>

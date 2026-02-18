@@ -21,13 +21,18 @@ export interface Tournament {
     notes?: string;
 }
 
+export interface GameResult {
+    first: boolean;
+    result: 'win' | 'loss';
+}
+
 export interface Match {
     id: string;
     deckId: string;
     tournamentId?: string;
-    opponentHero: Hero;
+    opponentDeck: string;
     result: 'win' | 'loss' | 'draw';
-    first: boolean; // true = First, false = Second
+    games: GameResult[];
     date: string;
     notes?: string;
 }
