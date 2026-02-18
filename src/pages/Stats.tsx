@@ -38,7 +38,7 @@ export default function Stats() {
 
     return (
         <div className="space-y-6 pb-20 animate-fade-in">
-            <div className="flex justify-between items-center sticky top-0 z-10 bg-background/80 backdrop-blur-md py-4 -mx-4 px-4 border-b border-white/5">
+            <div className="flex justify-between items-center sticky top-0 z-20 bg-background/80 backdrop-blur-md py-4 -mx-4 px-4 border-b border-white/10">
                 <h1 className="text-2xl font-bold">統計</h1>
             </div>
 

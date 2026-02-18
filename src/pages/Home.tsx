@@ -31,16 +31,14 @@ export default function Home() {
 
     return (
         <div className="space-y-6 pb-20 animate-fade-in">
-            <header className="flex justify-between items-center bg-background/80 backdrop-blur-md py-4 -mx-4 px-4 sticky top-0 z-10 border-b border-white/5">
-                <div>
-                    <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent">
-                        Grand Archive Tracker
-                    </h1>
-                </div>
+            <header className="flex justify-between items-center sticky top-0 z-20 bg-background/80 backdrop-blur-md py-4 -mx-4 px-4 border-b border-white/10">
+                <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent">
+                    ホーム
+                </h1>
                 <div className="flex gap-2">
                     <Link to="/play">
                         <Button variant="outline" size="sm" className="rounded-full border-primary/30">
-                            <Swords className="h-4 w-4 mr-1 text-primary" /> Play
+                            <Swords className="h-4 w-4 mr-1 text-primary" /> 对戦
                         </Button>
                     </Link>
                     <Link to="/matches">
