@@ -9,6 +9,7 @@ import Stats from "./pages/Stats";
 import Tournaments from "./pages/Tournaments";
 import Login from "./pages/Login";
 import Play from "./pages/Play";
+import Admin from "./pages/Admin";
 
 import { Component, type ErrorInfo, type ReactNode } from "react";
 
@@ -102,6 +103,7 @@ function App() {
               <Route path="/stats" element={<Stats />} />
               <Route path="/play" element={<Play />} />
               <Route path="/tournaments" element={<Tournaments />} />
+              <Route path="/admin" element={<Admin />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Layout>
