@@ -63,16 +63,28 @@ export default function Play() {
         return `${mins}:${secs.toString().padStart(2, '0')}`;
     };
 
+    const resetLife = () => {
+        if (confirm("ライフカウンターをリセット（0に戻す）しますか？")) {
+            setP1Life(0);
+            setP2Life(0);
+        }
+    };
+
     return (
         <div className="space-y-6 pb-20 animate-fade-in">
             <header className="flex justify-between items-center sticky top-0 z-20 bg-background/80 backdrop-blur-md py-4 -mx-4 px-4 border-b border-white/10">
                 <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-blue-400 bg-clip-text text-transparent">
                     対戦
                 </h1>
-                <Button size="sm" onClick={() => navigate("/matches", { state: { isAdding: true } })}>
-                    <Plus className="h-4 w-4 mr-1" />
-                    記録
-                </Button>
+                <div className="flex gap-2">
+                    <Button variant="ghost" size="icon" onClick={resetLife} className="text-muted-foreground hover:text-foreground">
+                        <RotateCcw className="h-4 w-4" />
+                    </Button>
+                    <Button size="sm" onClick={() => navigate("/matches", { state: { isAdding: true } })}>
+                        <Plus className="h-4 w-4 mr-1" />
+                        記録
+                    </Button>
+                </div>
             </header>
 
             {/* ライフカウンター */}

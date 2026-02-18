@@ -71,14 +71,6 @@ export function useMatches() {
             setMatches(prev => [newMatch, ...prev]);
             return newMatch;
         }
-        return null;
-    };
-
-    const deleteMatch = async (id: string) => {
-        const { error } = await supabase.from('matches').delete().eq('id', id);
-        if (!error) {
-            setMatches((prev) => prev.filter((m) => m.id !== id));
-        }
     };
 
     const updateMatch = async (id: string, updates: Partial<Match>) => {
