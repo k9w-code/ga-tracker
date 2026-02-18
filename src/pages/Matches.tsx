@@ -5,7 +5,7 @@ import { useDecks } from "../hooks/useDecks";
 import { Button } from "../components/ui/button";
 import { Card, CardContent } from "../components/ui/card";
 import { Select } from "../components/ui/select";
-import { Plus, Sword, Calendar, Trash2, Pencil } from "lucide-react";
+import { Plus, Sword, Calendar, Trash2, Pencil, MapPin } from "lucide-react";
 import { cn } from "../utils/cn";
 import { format } from "date-fns";
 import type { Match, GameResult } from "../types";
@@ -28,6 +28,7 @@ export default function Matches() {
     // Form State
     const [selectedDeckId, setSelectedDeckId] = useState("");
     const [opponentDeck, setOpponentDeck] = useState("");
+    const [eventName, setEventName] = useState("");
     const [result, setResult] = useState<'win' | 'loss' | 'draw'>("win");
     const [games, setGames] = useState<GameResult[]>([
         { first: true, result: 'win' }
@@ -40,6 +41,7 @@ export default function Matches() {
     const resetForm = () => {
         setSelectedDeckId("");
         setOpponentDeck("");
+        setEventName("");
         setResult("win");
         setGames([{ first: true, result: 'win' }]);
         setDate("");
@@ -59,6 +61,7 @@ export default function Matches() {
         setEditingMatchId(match.id);
         setSelectedDeckId(match.deckId);
         setOpponentDeck(match.opponentDeck);
+        setEventName(match.eventName || "");
         setResult(match.result);
         setGames(match.games || [{ first: true, result: 'win' }]);
         setDate(match.date);
@@ -73,6 +76,7 @@ export default function Matches() {
         const matchData = {
             deckId: selectedDeckId,
             opponentDeck,
+            eventName,
             result,
             games: games,
             date: date || new Date().toISOString(),
@@ -171,6 +175,16 @@ export default function Matches() {
                                 className="flex h-10 w-full rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                                 value={opponentDeck}
                                 onChange={(e) => setOpponentDeck(e.target.value)}
+                            />
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="text-xs text-muted-foreground">イベント名 (任意・最大40文字)</label>
+                            <input
+                                placeholder="ストア大会、フリー対戦など"
+                                className="flex h-10 w-full rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                                value={eventName}
+                                onChange={(e) => setEventName(e.target.value.slice(0, 40))}
                             />
                         </div>
 
@@ -305,7 +319,13 @@ export default function Matches() {
                                 )} />
                                 <Card className="pl-2 border-l-0 overflow-hidden bg-white/5 border-white/10">
                                     <CardContent className="p-4 flex items-center justify-between">
-                                        <div className="flex flex-col gap-1">
+                                        <div className="flex flex-col gap-1 w-full mr-2">
+                                            {match.eventName && (
+                                                <div className="flex items-center gap-1.5 text-primary-foreground/90 bg-primary/20 self-start px-2 py-0.5 rounded-full mb-1 border border-primary/20">
+                                                    <MapPin className="h-3 w-3 text-primary" />
+                                                    <span className="text-[10px] font-bold tracking-tight">{match.eventName}</span>
+                                                </div>
+                                            )}
                                             <div className="flex items-center gap-2">
                                                 <span className={cn(
                                                     "text-xs font-bold px-1.5 py-0.5 rounded",
@@ -341,7 +361,7 @@ export default function Matches() {
                                                 </div>
                                             )}
                                         </div>
-                                        <div className="flex gap-1">
+                                        <div className="flex gap-1 shrink-0">
                                             <Button
                                                 variant="ghost"
                                                 size="icon"

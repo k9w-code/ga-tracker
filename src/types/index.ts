@@ -31,6 +31,7 @@ export interface Match {
     deckId: string;
     tournamentId?: string;
     opponentDeck: string;
+    eventName?: string;
     result: 'win' | 'loss' | 'draw';
     games: GameResult[];
     date: string;
