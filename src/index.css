@@ -29,14 +29,36 @@
   --radius: 0.75rem;
 }
 
+.dark {
+  --color-background: hsl(220 30% 7%);
+  --color-foreground: hsl(210 20% 98%);
+
+  --color-primary: hsl(215 95% 60%);
+  --color-primary-foreground: hsl(210 20% 98%);
+
+  --color-secondary: hsl(222 25% 15%);
+  --color-secondary-foreground: hsl(215 95% 70%);
+
+  --color-accent: hsl(190 90% 50%);
+  --color-accent-foreground: hsl(220 30% 10%);
+
+  --color-card: hsl(222 25% 12%);
+  --color-card-foreground: hsl(210 20% 98%);
+
+  --color-muted: hsl(222 25% 15%);
+  --color-muted-foreground: hsl(210 10% 70%);
+
+  --color-border: hsl(222 25% 20%);
+}
+
 /* Custom Utilities for Glassmorphism */
 @layer components {
   .glass-panel {
-    @apply bg-white/70 backdrop-blur-md border border-white/40 shadow-sm;
+    @apply bg-white/70 dark:bg-black/40 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-sm;
   }
 
   .glass-card {
-    @apply bg-white/80 backdrop-blur-sm border border-white/30 shadow-md;
+    @apply bg-white/80 dark:bg-black/50 backdrop-blur-sm border border-white/30 dark:border-white/10 shadow-md;
   }
 }
 

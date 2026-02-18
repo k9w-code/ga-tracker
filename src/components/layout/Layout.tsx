@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Home, Layers, Swords, Trophy, BarChart2, LogOut, User } from "lucide-react";
+import { Home, Layers, Swords, Trophy, BarChart2, LogOut, User, Sun, Moon } from "lucide-react";
 import { cn } from "../../utils/cn";
 import { supabase } from "../../lib/supabase";
 import { useEffect, useState } from "react";
@@ -54,6 +54,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
                                 <span className="max-w-[100px] truncate">{userDisplayId}</span>
                             </div>
                         )}
+                        <button
+                            onClick={toggleTheme}
+                            className="p-2 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors border border-border"
+                            title={isDark ? "ライトモードに切り替え" : "ダークモードに切り替え"}
+                        >
+                            {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+                        </button>
                         <button
                             onClick={handleLogout}
                             className="p-2 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors border border-border"
