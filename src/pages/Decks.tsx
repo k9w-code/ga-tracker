@@ -11,38 +11,30 @@ export default function Decks() {
 
     const [editingDeck, setEditingDeck] = useState<any | null>(null);
     const [name, setName] = useState("");
-    const [hero, setHero] = useState<string>("");
-    const [format, setFormat] = useState<string>("");
     const [decklistUrl, setDecklistUrl] = useState("");
 
     const handleEdit = (deck: any) => {
         setEditingDeck(deck);
         setName(deck.name);
-        setHero(deck.hero);
-        setFormat(deck.format);
         setDecklistUrl(deck.decklistUrl || "");
         setIsAdding(true);
     };
 
     const handleAddDeck = async () => {
-        if (!name || !hero || !format) return;
+        if (!name) return;
         setLoadingAdd(true);
-        await addDeck({ name, hero, format, decklistUrl });
+        await addDeck({ name, hero: "", format: "", decklistUrl });
         setName("");
-        setHero("");
-        setFormat("");
         setDecklistUrl("");
         setIsAdding(false);
         setLoadingAdd(false);
     };
 
     const handleUpdateDeck = async () => {
-        if (!editingDeck || !name || !hero || !format) return;
+        if (!editingDeck || !name) return;
         setLoadingAdd(true);
-        await updateDeck(editingDeck.id, { name, hero, format, decklistUrl });
+        await updateDeck(editingDeck.id, { name, hero: "", format: "", decklistUrl });
         setName("");
-        setHero("");
-        setFormat("");
         setDecklistUrl("");
         setIsAdding(false);
         setLoadingAdd(false);
@@ -67,8 +59,6 @@ export default function Decks() {
                         setIsAdding(false);
                         setEditingDeck(null); // Clear editing deck
                         setName(""); // Clear name
-                        setHero("");
-                        setFormat("");
                         setDecklistUrl("");
                     } else {
                         setIsAdding(true);
@@ -92,27 +82,9 @@ export default function Decks() {
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <div className="space-y-2">
-                            <label className="text-xs text-muted-foreground">フォーマット (例: Standard)</label>
-                            <Input
-                                placeholder="フォーマットを入力"
-                                value={format}
-                                onChange={(e) => setFormat(e.target.value.slice(0, 40))}
-                            />
-                        </div>
-
-                        <div className="space-y-2">
-                            <label className="text-xs text-muted-foreground">ヒーロー (例: Lorraine)</label>
-                            <Input
-                                placeholder="ヒーロー名を入力"
-                                value={hero}
-                                onChange={(e) => setHero(e.target.value.slice(0, 40))}
-                            />
-                        </div>
-
-                        <div className="space-y-2">
                             <label className="text-xs text-muted-foreground">デッキ名</label>
                             <Input
-                                placeholder="デッキ名 (例: Bravo CC)"
+                                placeholder="デッキ名 (例: Crux Warrior)"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                             />
@@ -127,7 +99,7 @@ export default function Decks() {
                             />
                         </div>
 
-                        <Button className="w-full" onClick={editingDeck ? handleUpdateDeck : handleAddDeck} disabled={!name || !hero || !format || loadingAdd}>
+                        <Button className="w-full" onClick={editingDeck ? handleUpdateDeck : handleAddDeck} disabled={!name || loadingAdd}>
                             {loadingAdd ? "処理中..." : (editingDeck ? "更新する" : "登録する")}
                         </Button>
                     </CardContent>
@@ -158,7 +130,6 @@ export default function Decks() {
                                             </a>
                                         )}
                                     </div>
-                                    <p className="text-sm text-muted-foreground">{deck.hero} • {deck.format}</p>
                                 </div>
                                 <div className="flex gap-1">
                                     <Button
