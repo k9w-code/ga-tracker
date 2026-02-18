@@ -77,8 +77,9 @@ export default function Play() {
                     対戦
                 </h1>
                 <div className="flex gap-2">
-                    <Button variant="ghost" size="icon" onClick={resetLife} className="text-muted-foreground hover:text-foreground">
-                        <RotateCcw className="h-4 w-4" />
+                    <Button variant="ghost" size="sm" onClick={resetLife} className="text-xs text-muted-foreground hover:text-red-400 border border-transparent hover:border-red-400/30">
+                        <RotateCcw className="h-3 w-3 mr-1" />
+                        ライフリセット
                     </Button>
                     <Button size="sm" onClick={() => navigate("/matches", { state: { isAdding: true } })}>
                         <Plus className="h-4 w-4 mr-1" />

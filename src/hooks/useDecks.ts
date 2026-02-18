@@ -20,7 +20,7 @@ export function useDecks() {
                 name: d.name,
                 hero: d.hero,
                 format: d.format,
-                decklistUrl: d.fabrary_url,
+                decklistUrl: d.decklist_url,
                 imageUrl: d.image_url,
                 createdAt: d.created_at || new Date().toISOString(),
                 archived: !!d.archived
@@ -48,7 +48,7 @@ export function useDecks() {
             .from('ga_decks')
             .insert([{
                 ...rest,
-                fabrary_url: decklistUrl,
+                decklist_url: decklistUrl,
                 user_id: (await supabase.auth.getUser()).data.user?.id
             }])
             .select()
@@ -60,7 +60,7 @@ export function useDecks() {
                 name: data.name,
                 hero: data.hero,
                 format: data.format,
-                decklistUrl: data.fabrary_url,
+                decklistUrl: data.decklist_url,
                 slug: data.slug,
                 imageUrl: data.image_url,
                 createdAt: data.created_at,
@@ -76,7 +76,7 @@ export function useDecks() {
         const { decklistUrl, ...rest } = deck;
         const updateData: any = { ...rest };
         if (decklistUrl !== undefined) {
-            updateData.fabrary_url = decklistUrl;
+            updateData.decklist_url = decklistUrl;
         }
 
         const { error } = await supabase
