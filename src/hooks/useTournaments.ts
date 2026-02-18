@@ -9,7 +9,7 @@ export function useTournaments() {
     const fetchTournaments = async () => {
         setLoading(true);
         const { data, error } = await supabase
-            .from('tournaments')
+            .from('ga_tournaments')
             .select('*')
             .order('date', { ascending: false });
 
@@ -40,7 +40,7 @@ export function useTournaments() {
 
     const addTournament = async (tournament: Omit<Tournament, "id">) => {
         const { data, error } = await supabase
-            .from('tournaments')
+            .from('ga_tournaments')
             .insert([{
                 user_id: (await supabase.auth.getUser()).data.user?.id,
                 name: tournament.name,
