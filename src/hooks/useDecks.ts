@@ -9,7 +9,7 @@ export function useDecks() {
     const fetchDecks = async () => {
         setLoading(true);
         const { data, error } = await supabase
-            .from('decks')
+            .from('ga_decks')
             .select('*')
             .order('created_at', { ascending: false });
 
@@ -45,7 +45,7 @@ export function useDecks() {
     const addDeck = async (deck: Omit<Deck, "id" | "createdAt" | "archived">) => {
         const { decklistUrl, ...rest } = deck;
         const { data, error } = await supabase
-            .from('decks')
+            .from('ga_decks')
             .insert([{
                 ...rest,
                 fabrary_url: decklistUrl,
@@ -80,7 +80,7 @@ export function useDecks() {
         }
 
         const { error } = await supabase
-            .from('decks')
+            .from('ga_decks')
             .update(updateData)
             .eq('id', id);
 

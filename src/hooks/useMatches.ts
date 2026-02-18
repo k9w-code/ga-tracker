@@ -9,7 +9,7 @@ export function useMatches() {
     const fetchMatches = async () => {
         setLoading(true);
         const { data, error } = await supabase
-            .from('matches')
+            .from('ga_matches')
             .select('*')
             .order('date', { ascending: false });
 
@@ -43,7 +43,7 @@ export function useMatches() {
 
     const addMatch = async (match: Omit<Match, "id" | "date"> & { date?: string }) => {
         const { data, error } = await supabase
-            .from('matches')
+            .from('ga_matches')
             .insert([{
                 user_id: (await supabase.auth.getUser()).data.user?.id,
                 deck_id: match.deckId,
@@ -71,11 +71,22 @@ export function useMatches() {
             setMatches(prev => [newMatch, ...prev]);
             return newMatch;
         }
+        if (error) {
+            console.error("Error adding match:", error);
+        }
+        return null;
+    };
+
+    const deleteMatch = async (id: string) => {
+        const { error } = await supabase.from('ga_matches').delete().eq('id', id);
+        if (!error) {
+            setMatches((prev) => prev.filter((m) => m.id !== id));
+        }
     };
 
     const updateMatch = async (id: string, updates: Partial<Match>) => {
         const { error } = await supabase
-            .from('matches')
+            .from('ga_matches')
             .update({
                 deck_id: updates.deckId,
                 tournament_id: updates.tournamentId,
