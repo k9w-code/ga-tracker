@@ -128,7 +128,7 @@ export default function Matches() {
 
     return (
         <div className="space-y-6 pb-20 animate-fade-in">
-            <header className="flex justify-between items-center sticky top-0 z-20 bg-background/80 backdrop-blur-md py-4 -mx-4 px-4 border-b border-white/10">
+            <header className="flex justify-between items-center sticky top-0 z-20 bg-background/80 backdrop-blur-md py-4 -mx-4 px-4 border-b border-border">
                 <h1 className="text-2xl font-bold">対戦履歴</h1>
                 <Button onClick={() => {
                     if (isAdding) {
@@ -150,7 +150,7 @@ export default function Matches() {
             </header>
 
             {isAdding && (
-                <Card className="animate-slide-up bg-gradient-to-br from-primary/10 to-secondary/10 border-primary/20">
+                <Card className="animate-slide-up bg-gradient-to-br from-primary/5 to-secondary/30 dark:from-primary/10 dark:to-secondary/10 border-border">
                     <CardContent className="space-y-4 pt-6">
                         <div className="text-sm font-semibold mb-2">
                             {editingMatchId ? "対戦を編集" : "新しい対戦を記録"}
@@ -172,7 +172,7 @@ export default function Matches() {
                             <label className="text-xs text-muted-foreground">相手のデッキ</label>
                             <input
                                 placeholder="Crux Warrior"
-                                className="flex h-10 w-full rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                                className="flex h-10 w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                                 value={opponentDeck}
                                 onChange={(e) => setOpponentDeck(e.target.value)}
                             />
@@ -182,7 +182,7 @@ export default function Matches() {
                             <label className="text-xs text-muted-foreground">イベント名 (任意・最大40文字)</label>
                             <input
                                 placeholder="ストア大会、フリー対戦など"
-                                className="flex h-10 w-full rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                                className="flex h-10 w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                                 value={eventName}
                                 onChange={(e) => setEventName(e.target.value.slice(0, 40))}
                             />
@@ -192,14 +192,14 @@ export default function Matches() {
                             <div className="flex justify-between items-center">
                                 <label className="text-xs text-muted-foreground font-bold uppercase tracking-wider">Game Records</label>
                                 {games.length < 3 && (
-                                    <Button variant="ghost" size="sm" onClick={addGame} className="h-6 text-[10px] px-2 border border-white/10">
+                                    <Button variant="ghost" size="sm" onClick={addGame} className="h-6 text-[10px] px-2 border border-border">
                                         + ゲームを追加
                                     </Button>
                                 )}
                             </div>
 
                             {games.map((game, index) => (
-                                <div key={index} className="space-y-2 p-3 bg-white/5 rounded-lg border border-white/5 relative group/game">
+                                <div key={index} className="space-y-2 p-3 bg-muted/50 dark:bg-white/5 rounded-lg border border-border relative group/game">
                                     <div className="flex justify-between items-center mb-1">
                                         <span className="text-[10px] font-bold opacity-50">{index + 1}戦目</span>
                                         {games.length > 1 && (
@@ -209,7 +209,7 @@ export default function Matches() {
                                         )}
                                     </div>
                                     <div className="grid grid-cols-2 gap-3">
-                                        <div className="flex bg-black/20 rounded p-0.5">
+                                        <div className="flex bg-muted dark:bg-black/20 rounded p-0.5">
                                             <button
                                                 className={cn("flex-1 py-1 text-[10px] font-bold rounded-sm transition-colors", game.first ? "bg-primary text-white" : "text-muted-foreground")}
                                                 onClick={() => updateGame(index, 'first', true)}
@@ -219,7 +219,7 @@ export default function Matches() {
                                                 onClick={() => updateGame(index, 'first', false)}
                                             >後攻</button>
                                         </div>
-                                        <div className="flex bg-black/20 rounded p-0.5">
+                                        <div className="flex bg-muted dark:bg-black/20 rounded p-0.5">
                                             <button
                                                 className={cn("flex-1 py-1 text-[10px] font-bold rounded-sm transition-colors", game.result === 'win' ? "bg-green-500/80 text-white" : "text-muted-foreground")}
                                                 onClick={() => updateGame(index, 'result', 'win')}
@@ -234,9 +234,9 @@ export default function Matches() {
                             ))}
                         </div>
 
-                        <div className="pt-2 border-t border-white/5">
+                        <div className="pt-2 border-t border-border">
                             <label className="text-xs text-muted-foreground mb-2 block">結果判定</label>
-                            <div className="flex bg-white/5 rounded-md p-1">
+                            <div className="flex bg-muted dark:bg-white/5 rounded-md p-1">
                                 <button
                                     className={cn("flex-1 py-1.5 text-xs font-bold rounded-sm transition-colors", result === 'win' ? "bg-green-500 text-white" : "text-muted-foreground")}
                                     onClick={() => setResult('win')}
@@ -256,7 +256,7 @@ export default function Matches() {
                             <label className="text-xs text-muted-foreground">メモ (最大40文字)</label>
                             <input
                                 placeholder="対戦の振り返りなど..."
-                                className="flex h-10 w-full rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                                className="flex h-10 w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                                 value={notes}
                                 onChange={(e) => setNotes(e.target.value.slice(0, 40))}
                             />
@@ -275,7 +275,7 @@ export default function Matches() {
                     onClick={() => setFilterDeckId("all")}
                     className={cn(
                         "px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors border",
-                        filterDeckId === "all" ? "bg-white text-black border-white" : "bg-transparent text-muted-foreground border-white/10 hover:border-white/30"
+                        filterDeckId === "all" ? "bg-primary text-primary-foreground border-primary" : "bg-transparent text-muted-foreground border-border hover:border-foreground/30"
                     )}
                 >
                     すべてのデッキ
@@ -286,7 +286,7 @@ export default function Matches() {
                         onClick={() => setFilterDeckId(deck.id)}
                         className={cn(
                             "px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors border",
-                            filterDeckId === deck.id ? "bg-white text-black border-white" : "bg-transparent text-muted-foreground border-white/10 hover:border-white/30"
+                            filterDeckId === deck.id ? "bg-primary text-primary-foreground border-primary" : "bg-transparent text-muted-foreground border-border hover:border-foreground/30"
                         )}
                     >
                         {deck.name}
@@ -317,7 +317,7 @@ export default function Matches() {
                                     "absolute left-0 top-0 bottom-0 w-1 rounded-l-md z-10",
                                     match.result === 'win' ? "bg-green-500" : match.result === 'loss' ? "bg-red-500" : "bg-yellow-500"
                                 )} />
-                                <Card className="pl-2 border-l-0 overflow-hidden bg-white/5 border-white/10">
+                                <Card className="pl-2 border-l-0 overflow-hidden bg-card border-border">
                                     <CardContent className="p-4 flex items-center justify-between">
                                         <div className="flex flex-col gap-1 w-full mr-2">
                                             {match.eventName && (
@@ -343,7 +343,7 @@ export default function Matches() {
                                             </div>
                                             <div className="flex flex-wrap gap-1.5 my-1">
                                                 {match.games && match.games.map((g, i) => (
-                                                    <div key={i} className="flex items-center bg-white/5 px-1.5 py-0.5 rounded text-[9px] border border-white/10">
+                                                    <div key={i} className="flex items-center bg-muted/50 dark:bg-white/5 px-1.5 py-0.5 rounded text-[9px] border border-border">
                                                         <span className="opacity-60 mr-1">{i + 1}:</span>
                                                         <span className={cn("font-bold mr-1", g.result === 'win' ? "text-green-400" : "text-red-400")}>
                                                             {g.result === 'win' ? 'W' : 'L'}
@@ -356,7 +356,7 @@ export default function Matches() {
                                                 {deck?.name || "不明なデッキ"}
                                             </div>
                                             {match.notes && (
-                                                <div className="text-xs mt-1 px-2 py-1 bg-white/5 border border-white/5 rounded text-white/70 break-all">
+                                                <div className="text-xs mt-1 px-2 py-1 bg-muted/50 dark:bg-white/5 border border-border rounded text-muted-foreground break-all">
                                                     {match.notes}
                                                 </div>
                                             )}
