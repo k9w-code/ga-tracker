@@ -150,13 +150,13 @@ export default function Matches() {
             </header>
 
             {isAdding && (
-                <Card className="animate-slide-up bg-gradient-to-br from-primary/5 to-secondary/30 dark:from-primary/10 dark:to-secondary/10 border-border">
+                <Card className="animate-slide-up bg-card shadow-lg border-border">
                     <CardContent className="space-y-4 pt-6">
                         <div className="text-sm font-semibold mb-2">
                             {editingMatchId ? "対戦を編集" : "新しい対戦を記録"}
                         </div>
                         <div className="space-y-2">
-                            <label className="text-xs text-muted-foreground">使用デッキ</label>
+                            <label className="text-xs font-semibold text-foreground/70">使用デッキ</label>
                             <Select
                                 value={selectedDeckId}
                                 onChange={(e) => setSelectedDeckId(e.target.value)}
@@ -169,20 +169,20 @@ export default function Matches() {
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-xs text-muted-foreground">相手のデッキ</label>
+                            <label className="text-xs font-semibold text-foreground/70">相手のデッキ</label>
                             <input
                                 placeholder="Crux Warrior"
-                                className="flex h-10 w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                                className="flex h-10 w-full rounded-md border-2 border-border bg-background px-3 py-2 text-sm text-foreground ring-offset-background placeholder:text-muted-foreground/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-primary"
                                 value={opponentDeck}
                                 onChange={(e) => setOpponentDeck(e.target.value)}
                             />
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-xs text-muted-foreground">イベント名 (任意・最大40文字)</label>
+                            <label className="text-xs font-semibold text-foreground/70">イベント名 (任意・最大40文字)</label>
                             <input
                                 placeholder="ストア大会、フリー対戦など"
-                                className="flex h-10 w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                                className="flex h-10 w-full rounded-md border-2 border-border bg-background px-3 py-2 text-sm text-foreground ring-offset-background placeholder:text-muted-foreground/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-primary"
                                 value={eventName}
                                 onChange={(e) => setEventName(e.target.value.slice(0, 40))}
                             />
@@ -190,7 +190,7 @@ export default function Matches() {
 
                         <div className="space-y-3">
                             <div className="flex justify-between items-center">
-                                <label className="text-xs text-muted-foreground font-bold uppercase tracking-wider">Game Records</label>
+                                <label className="text-xs text-foreground/70 font-bold uppercase tracking-wider">対戦記録</label>
                                 {games.length < 3 && (
                                     <Button variant="ghost" size="sm" onClick={addGame} className="h-6 text-[10px] px-2 border border-border">
                                         + ゲームを追加
@@ -199,9 +199,9 @@ export default function Matches() {
                             </div>
 
                             {games.map((game, index) => (
-                                <div key={index} className="space-y-2 p-3 bg-muted/50 dark:bg-white/5 rounded-lg border border-border relative group/game">
+                                <div key={index} className="space-y-2 p-3 bg-muted dark:bg-white/5 rounded-lg border border-border relative group/game">
                                     <div className="flex justify-between items-center mb-1">
-                                        <span className="text-[10px] font-bold opacity-50">{index + 1}戦目</span>
+                                        <span className="text-[10px] font-bold text-foreground/60">{index + 1}戦目</span>
                                         {games.length > 1 && (
                                             <button onClick={() => removeGame(index)} className="text-red-400 opacity-0 group-hover/game:opacity-100 transition-opacity">
                                                 <Trash2 className="h-3 w-3" />
@@ -211,21 +211,21 @@ export default function Matches() {
                                     <div className="grid grid-cols-2 gap-3">
                                         <div className="flex bg-muted dark:bg-black/20 rounded p-0.5">
                                             <button
-                                                className={cn("flex-1 py-1 text-[10px] font-bold rounded-sm transition-colors", game.first ? "bg-primary text-white" : "text-muted-foreground")}
+                                                className={cn("flex-1 py-1 text-[10px] font-bold rounded-sm transition-colors", game.first ? "bg-primary text-white" : "text-foreground/50")}
                                                 onClick={() => updateGame(index, 'first', true)}
                                             >先攻</button>
                                             <button
-                                                className={cn("flex-1 py-1 text-[10px] font-bold rounded-sm transition-colors", !game.first ? "bg-primary text-white" : "text-muted-foreground")}
+                                                className={cn("flex-1 py-1 text-[10px] font-bold rounded-sm transition-colors", !game.first ? "bg-primary text-white" : "text-foreground/50")}
                                                 onClick={() => updateGame(index, 'first', false)}
                                             >後攻</button>
                                         </div>
                                         <div className="flex bg-muted dark:bg-black/20 rounded p-0.5">
                                             <button
-                                                className={cn("flex-1 py-1 text-[10px] font-bold rounded-sm transition-colors", game.result === 'win' ? "bg-green-500/80 text-white" : "text-muted-foreground")}
+                                                className={cn("flex-1 py-1 text-[10px] font-bold rounded-sm transition-colors", game.result === 'win' ? "bg-green-500 text-white" : "text-foreground/50")}
                                                 onClick={() => updateGame(index, 'result', 'win')}
                                             >勝利</button>
                                             <button
-                                                className={cn("flex-1 py-1 text-[10px] font-bold rounded-sm transition-colors", game.result === 'loss' ? "bg-red-500/80 text-white" : "text-muted-foreground")}
+                                                className={cn("flex-1 py-1 text-[10px] font-bold rounded-sm transition-colors", game.result === 'loss' ? "bg-red-500 text-white" : "text-foreground/50")}
                                                 onClick={() => updateGame(index, 'result', 'loss')}
                                             >敗北</button>
                                         </div>
@@ -235,28 +235,28 @@ export default function Matches() {
                         </div>
 
                         <div className="pt-2 border-t border-border">
-                            <label className="text-xs text-muted-foreground mb-2 block">結果判定</label>
+                            <label className="text-xs font-semibold text-foreground/70 mb-2 block">結果判定</label>
                             <div className="flex bg-muted dark:bg-white/5 rounded-md p-1">
                                 <button
-                                    className={cn("flex-1 py-1.5 text-xs font-bold rounded-sm transition-colors", result === 'win' ? "bg-green-500 text-white" : "text-muted-foreground")}
+                                    className={cn("flex-1 py-1.5 text-xs font-bold rounded-sm transition-colors", result === 'win' ? "bg-green-500 text-white" : "text-foreground/50")}
                                     onClick={() => setResult('win')}
                                 >勝利</button>
                                 <button
-                                    className={cn("flex-1 py-1.5 text-xs font-bold rounded-sm transition-colors", result === 'loss' ? "bg-red-500 text-white" : "text-muted-foreground")}
+                                    className={cn("flex-1 py-1.5 text-xs font-bold rounded-sm transition-colors", result === 'loss' ? "bg-red-500 text-white" : "text-foreground/50")}
                                     onClick={() => setResult('loss')}
                                 >敗北</button>
                                 <button
-                                    className={cn("flex-1 py-1.5 text-xs font-bold rounded-sm transition-colors", result === 'draw' ? "bg-yellow-500 text-white" : "text-muted-foreground")}
+                                    className={cn("flex-1 py-1.5 text-xs font-bold rounded-sm transition-colors", result === 'draw' ? "bg-yellow-500 text-white" : "text-foreground/50")}
                                     onClick={() => setResult('draw')}
                                 >引分</button>
                             </div>
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-xs text-muted-foreground">メモ (最大40文字)</label>
+                            <label className="text-xs font-semibold text-foreground/70">メモ (最大40文字)</label>
                             <input
                                 placeholder="対戦の振り返りなど..."
-                                className="flex h-10 w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                                className="flex h-10 w-full rounded-md border-2 border-border bg-background px-3 py-2 text-sm text-foreground ring-offset-background placeholder:text-muted-foreground/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-primary"
                                 value={notes}
                                 onChange={(e) => setNotes(e.target.value.slice(0, 40))}
                             />
