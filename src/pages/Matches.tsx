@@ -239,7 +239,7 @@ export default function Matches() {
                         </div>
 
                         <div className="pt-2 border-t border-border">
-                            <label className="text-xs font-semibold text-foreground/70 mb-2 block">結果判定</label>
+                            <label className="text-xs font-semibold text-foreground/70 mb-2 block">最終結果</label>
                             <div className="flex bg-muted dark:bg-white/5 rounded-md p-1">
                                 <button
                                     className={cn("flex-1 py-1.5 text-xs font-bold rounded-sm transition-colors", result === 'win' ? "bg-green-500 text-white" : "text-foreground/50")}
