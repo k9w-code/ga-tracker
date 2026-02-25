@@ -203,7 +203,7 @@ export default function Matches() {
                                     <div className="flex justify-between items-center mb-1">
                                         <span className="text-[10px] font-bold text-foreground/60">{index + 1}戦目</span>
                                         {games.length > 1 && (
-                                            <button onClick={() => removeGame(index)} className="text-red-400 opacity-0 group-hover/game:opacity-100 transition-opacity">
+                                            <button onClick={() => removeGame(index)} className="text-red-400 hover:text-red-500 transition-colors p-1 bg-red-400/10 rounded-sm">
                                                 <Trash2 className="h-3 w-3" />
                                             </button>
                                         )}
@@ -228,6 +228,10 @@ export default function Matches() {
                                                 className={cn("flex-1 py-1 text-[10px] font-bold rounded-sm transition-colors", game.result === 'loss' ? "bg-red-500 text-white" : "text-foreground/50")}
                                                 onClick={() => updateGame(index, 'result', 'loss')}
                                             >敗北</button>
+                                            <button
+                                                className={cn("flex-1 py-1 text-[10px] font-bold rounded-sm transition-colors", game.result === 'draw' ? "bg-yellow-500 text-white" : "text-foreground/50")}
+                                                onClick={() => updateGame(index, 'result', 'draw')}
+                                            >引分</button>
                                         </div>
                                     </div>
                                 </div>
@@ -345,8 +349,8 @@ export default function Matches() {
                                                 {match.games && match.games.map((g, i) => (
                                                     <div key={i} className="flex items-center bg-muted/50 dark:bg-white/5 px-1.5 py-0.5 rounded text-[9px] border border-border">
                                                         <span className="opacity-60 mr-1">{i + 1}:</span>
-                                                        <span className={cn("font-bold mr-1", g.result === 'win' ? "text-green-400" : "text-red-400")}>
-                                                            {g.result === 'win' ? 'W' : 'L'}
+                                                        <span className={cn("font-bold mr-1", g.result === 'win' ? "text-green-400" : g.result === 'loss' ? "text-red-400" : "text-yellow-400")}>
+                                                            {g.result === 'win' ? 'W' : g.result === 'loss' ? 'L' : 'D'}
                                                         </span>
                                                         <span className="opacity-60 text-[8px]">{g.first ? '先' : '後'}</span>
                                                     </div>

@@ -23,7 +23,7 @@ export interface Tournament {
 
 export interface GameResult {
     first: boolean;
-    result: 'win' | 'loss';
+    result: 'win' | 'loss' | 'draw';
 }
 
 export interface Match {
