@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { Layout } from "./components/layout/Layout";
-import { supabase } from "./lib/supabase";
+import { ErrorBoundary } from "./components/layout/ErrorBoundary";
+import { useAuth } from "./hooks/useAuth";
 import Home from "./pages/Home";
 import Decks from "./pages/Decks";
 import Matches from "./pages/Matches";
@@ -12,71 +13,11 @@ import Play from "./pages/Play";
 import Admin from "./pages/Admin";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 
-import { Component, type ErrorInfo, type ReactNode } from "react";
-
-class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean, error: Error | null }> {
-  constructor(props: { children: ReactNode }) {
-    super(props);
-    this.state = { hasError: false, error: null };
-  }
-
-  static getDerivedStateFromError(error: Error) {
-    return { hasError: true, error };
-  }
-
-  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error("Uncaught error:", error, errorInfo);
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return (
-        <div className="min-h-screen flex items-center justify-center bg-background p-4 text-center">
-          <div className="space-y-4">
-            <h1 className="text-2xl font-bold text-red-500">申し訳ありません。エラーが発生しました。</h1>
-            <pre className="text-xs text-muted-foreground bg-white/5 p-4 rounded overflow-auto max-w-lg">
-              {this.state.error?.message}
-            </pre>
-            <button
-              onClick={() => window.location.reload()}
-              className="px-4 py-2 bg-primary rounded-md font-bold"
-            >
-              再読み込み
-            </button>
-          </div>
-        </div>
-      );
-    }
-    return this.props.children;
-  }
-}
-
 function App() {
-  const [session, setSession] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  const { session, loading } = useAuth();
 
   useEffect(() => {
     document.title = "Grand Archive Tracker";
-
-    // Initial check
-    const checkSession = async () => {
-      try {
-        const { data: { session } } = await supabase.auth.getSession();
-        setSession(session);
-      } catch (e) {
-        console.error("Session check failed", e);
-      } finally {
-        setLoading(false);
-      }
-    };
-    checkSession();
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log("Auth event:", event);
-      setSession(session);
-    });
-
-    return () => subscription.unsubscribe();
   }, []);
 
   if (loading) {

@@ -30,39 +30,6 @@ export default function Admin() {
     const navigate = useNavigate();
     const [currentUserEmail, setCurrentUserEmail] = useState<string | null>(null);
 
-    useEffect(() => {
-        checkAdminStatus();
-    }, []);
-
-    const checkAdminStatus = async () => {
-        setLoading(true);
-        const { data: { user } } = await supabase.auth.getUser();
-
-        if (!user || !user.email) {
-            navigate("/login");
-            return;
-        }
-
-        setCurrentUserEmail(user.email);
-
-        // Check against ga_admins table
-        const { data, error } = await supabase
-            .from('ga_admins')
-            .select('email')
-            .eq('email', user.email)
-            .single();
-
-        if (error || !data) {
-            // Not an admin
-            setLoading(false);
-            return;
-        }
-
-        setIsAdmin(true);
-        fetchData();
-        setLoading(false);
-    };
-
     const fetchData = async () => {
         // Fetch all users using RPC
         const { data: usersData, error: usersError } = await supabase
@@ -86,6 +53,44 @@ export default function Admin() {
             setAdmins(adminsData || []);
         }
     };
+
+    const checkAdminStatus = async (isMounted = true) => {
+        if (isMounted) setLoading(true);
+        const { data: { user } } = await supabase.auth.getUser();
+
+        if (!user || !user.email) {
+            navigate("/login");
+            return;
+        }
+
+        if (isMounted) setCurrentUserEmail(user.email);
+
+        // Check against ga_admins table
+        const { data, error } = await supabase
+            .from('ga_admins')
+            .select('email')
+            .eq('email', user.email)
+            .single();
+
+        if (error || !data) {
+            // Not an admin
+            if (isMounted) setLoading(false);
+            return;
+        }
+
+        if (isMounted) {
+            setIsAdmin(true);
+            fetchData();
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        let isMounted = true;
+        checkAdminStatus(isMounted);
+        return () => { isMounted = false; };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handleAddAdmin = async () => {
         if (!newAdminId) return;

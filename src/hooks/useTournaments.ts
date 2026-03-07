@@ -6,14 +6,14 @@ export function useTournaments() {
     const [tournaments, setTournaments] = useState<Tournament[]>([]);
     const [loading, setLoading] = useState(true);
 
-    const fetchTournaments = async () => {
-        setLoading(true);
+    const fetchTournaments = async (isMounted = true) => {
+        if (isMounted) setLoading(true);
         const { data, error } = await supabase
             .from('ga_tournaments')
             .select('*')
             .order('date', { ascending: false });
 
-        if (!error && data) {
+        if (!error && data && isMounted) {
             const mappedTournaments: Tournament[] = data.map(t => ({
                 id: t.id,
                 name: t.name,
@@ -23,11 +23,16 @@ export function useTournaments() {
             }));
             setTournaments(mappedTournaments);
         }
-        setLoading(false);
+        if (isMounted) setLoading(false);
     };
 
     useEffect(() => {
-        fetchTournaments();
+        let isMounted = true;
+        const init = async () => {
+            await fetchTournaments(isMounted);
+        };
+        init();
+        return () => { isMounted = false; };
     }, []);
 
     const sortedTournaments = useMemo(() => {
@@ -39,17 +44,15 @@ export function useTournaments() {
     }, [tournaments]);
 
     const addTournament = async (tournament: Omit<Tournament, "id">) => {
-        const { data, error } = await supabase
-            .from('ga_tournaments')
-            .insert([{
-                user_id: (await supabase.auth.getUser()).data.user?.id,
-                name: tournament.name,
-                date: tournament.date,
-                format: tournament.format,
-                notes: tournament.notes
-            }])
-            .select()
-            .single();
+        const { data, error } = await supabase.rpc('add_tournament', {
+            p_name: tournament.name,
+            p_date: tournament.date,
+            p_format: tournament.format,
+            p_deck_id: null,
+            p_placement: null,
+            p_total_players: null,
+            p_notes: tournament.notes
+        });
 
         if (!error && data) {
             const newTournament: Tournament = {
@@ -66,7 +69,7 @@ export function useTournaments() {
     };
 
     const deleteTournament = async (id: string) => {
-        const { error } = await supabase.from('tournaments').delete().eq('id', id);
+        const { error } = await supabase.from('ga_tournaments').delete().eq('id', id);
         if (!error) {
             setTournaments((prev) => prev.filter((t) => t.id !== id));
         }

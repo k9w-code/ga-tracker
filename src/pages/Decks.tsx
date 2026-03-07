@@ -4,16 +4,17 @@ import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
 import { Plus, Trash2, Pencil, ExternalLink } from "lucide-react";
+import type { Deck } from "../types";
 
 export default function Decks() {
     const { decks, addDeck, updateDeck, deleteDeck, loading } = useDecks();
     const [isAdding, setIsAdding] = useState(false);
 
-    const [editingDeck, setEditingDeck] = useState<any | null>(null);
+    const [editingDeck, setEditingDeck] = useState<Deck | null>(null);
     const [name, setName] = useState("");
     const [decklistUrl, setDecklistUrl] = useState("");
 
-    const handleEdit = (deck: any) => {
+    const handleEdit = (deck: Deck) => {
         setEditingDeck(deck);
         setName(deck.name);
         setDecklistUrl(deck.decklistUrl || "");

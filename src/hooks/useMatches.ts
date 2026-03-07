@@ -6,14 +6,14 @@ export function useMatches() {
     const [matches, setMatches] = useState<Match[]>([]);
     const [loading, setLoading] = useState(true);
 
-    const fetchMatches = async () => {
-        setLoading(true);
+    const fetchMatches = async (isMounted = true) => {
+        if (isMounted) setLoading(true);
         const { data, error } = await supabase
             .from('ga_matches')
             .select('*')
             .order('date', { ascending: false });
 
-        if (!error && data) {
+        if (!error && data && isMounted) {
             const mappedMatches: Match[] = data.map(m => ({
                 id: m.id,
                 deckId: m.deck_id,
@@ -27,11 +27,16 @@ export function useMatches() {
             }));
             setMatches(mappedMatches);
         }
-        setLoading(false);
+        if (isMounted) setLoading(false);
     };
 
     useEffect(() => {
-        fetchMatches();
+        let isMounted = true;
+        const init = async () => {
+            await fetchMatches(isMounted);
+        };
+        init();
+        return () => { isMounted = false; };
     }, []);
 
     const sortedMatches = useMemo(() => {
@@ -43,21 +48,16 @@ export function useMatches() {
     }, [matches]);
 
     const addMatch = async (match: Omit<Match, "id" | "date"> & { date?: string }) => {
-        const { data, error } = await supabase
-            .from('ga_matches')
-            .insert([{
-                user_id: (await supabase.auth.getUser()).data.user?.id,
-                deck_id: match.deckId,
-                tournament_id: match.tournamentId,
-                opponent_deck: match.opponentDeck,
-                event_name: match.eventName,
-                result: match.result,
-                games: match.games,
-                date: match.date || new Date().toISOString(),
-                notes: match.notes
-            }])
-            .select()
-            .single();
+        const { data, error } = await supabase.rpc('add_match', {
+            p_deck_id: match.deckId,
+            p_tournament_id: match.tournamentId,
+            p_opponent_deck: match.opponentDeck,
+            p_event_name: match.eventName,
+            p_result: match.result,
+            p_games: match.games,
+            p_date: match.date || new Date().toISOString(),
+            p_notes: match.notes
+        });
 
         if (!error && data) {
             const newMatch: Match = {
@@ -88,19 +88,17 @@ export function useMatches() {
     };
 
     const updateMatch = async (id: string, updates: Partial<Match>) => {
-        const { error } = await supabase
-            .from('ga_matches')
-            .update({
-                deck_id: updates.deckId,
-                tournament_id: updates.tournamentId,
-                opponent_deck: updates.opponentDeck,
-                event_name: updates.eventName,
-                result: updates.result,
-                games: updates.games,
-                date: updates.date,
-                notes: updates.notes
-            })
-            .eq('id', id);
+        const { error } = await supabase.rpc('update_match', {
+            p_id: id,
+            p_deck_id: updates.deckId,
+            p_tournament_id: updates.tournamentId,
+            p_opponent_deck: updates.opponentDeck,
+            p_event_name: updates.eventName,
+            p_result: updates.result,
+            p_games: updates.games,
+            p_date: updates.date,
+            p_notes: updates.notes
+        });
 
         if (!error) {
             setMatches((prev) =>

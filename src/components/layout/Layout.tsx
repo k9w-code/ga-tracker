@@ -19,13 +19,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
         const savedTheme = localStorage.getItem("theme");
         const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
-        if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
-            setIsDark(true);
-            document.documentElement.classList.add("dark");
-        } else {
-            setIsDark(false);
-            document.documentElement.classList.remove("dark");
-        }
+        // timeoutを使って同期的なsetStateの警告を回避する
+        setTimeout(() => {
+            if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
+                setIsDark(true);
+                document.documentElement.classList.add("dark");
+            } else {
+                setIsDark(false);
+                document.documentElement.classList.remove("dark");
+            }
+        }, 0);
 
         supabase.auth.getUser().then(({ data: { user } }) => {
             setUserDisplayId(getDisplayId(user?.email));

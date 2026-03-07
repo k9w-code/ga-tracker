@@ -6,14 +6,14 @@ export function useDecks() {
     const [decks, setDecks] = useState<Deck[]>([]);
     const [loading, setLoading] = useState(true);
 
-    const fetchDecks = async () => {
-        setLoading(true);
+    const fetchDecks = async (isMounted = true) => {
+        if (isMounted) setLoading(true);
         const { data, error } = await supabase
             .from('ga_decks')
             .select('*')
             .order('created_at', { ascending: false });
 
-        if (!error && data) {
+        if (!error && data && isMounted) {
             // Map DB fields to camelCase if necessary (matching our Deck type)
             const mappedDecks: Deck[] = data.map(d => ({
                 id: d.id,
@@ -27,11 +27,16 @@ export function useDecks() {
             }));
             setDecks(mappedDecks);
         }
-        setLoading(false);
+        if (isMounted) setLoading(false);
     };
 
     useEffect(() => {
-        fetchDecks();
+        let isMounted = true;
+        const init = async () => {
+            await fetchDecks(isMounted);
+        };
+        init();
+        return () => { isMounted = false; };
     }, []);
 
     const sortedDecks = useMemo(() => {
@@ -44,16 +49,14 @@ export function useDecks() {
 
     const addDeck = async (deck: Omit<Deck, "id" | "createdAt" | "archived">) => {
         const { decklistUrl, name, imageUrl } = deck;
-        const { data, error } = await supabase
-            .from('ga_decks')
-            .insert([{
-                name,
-                image_url: imageUrl,
-                decklist_url: decklistUrl,
-                user_id: (await supabase.auth.getUser()).data.user?.id
-            }])
-            .select()
-            .single();
+        const { data, error } = await supabase.rpc('add_deck', {
+            p_name: name,
+            p_hero: null,
+            p_element: null,
+            p_format: null,
+            p_deck_list_url: decklistUrl,
+            p_image_url: imageUrl
+        });
 
         if (!error && data) {
             const newDeck: Deck = {
@@ -74,7 +77,7 @@ export function useDecks() {
     };
 
     const updateDeck = async (id: string, deck: Partial<Omit<Deck, "id" | "createdAt">>) => {
-        const updateData: any = {};
+        const updateData: Record<string, unknown> = {};
         if (deck.name !== undefined) updateData.name = deck.name;
         if (deck.decklistUrl !== undefined) updateData.decklist_url = deck.decklistUrl;
         if (deck.imageUrl !== undefined) updateData.image_url = deck.imageUrl;
